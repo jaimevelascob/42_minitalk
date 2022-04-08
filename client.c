@@ -12,40 +12,39 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+int msg = 0;
 
-char* stringToBinary(char* s) {
-    if(s == NULL) return 0;
-    size_t len = strlen(s);
-    char *binary = malloc(len*8 + 1);
-    binary[0] = '\0';
-    for(size_t i = 0; i < len; ++i) for(int j = 7; j >= 0; --j)
+void    msg_received()
+{
+    if (msg == 0)
     {
-            if(s[i] & (1 << j)) 
-                strcat(binary,"1");
-             else 
-                strcat(binary,"0");
+        printf("msg received\n");
+        msg = 1;
     }
-    return binary;
 }
-
 int main(int argc, char **argv)
 {
+    int j;
+
+    signal(SIGUSR1, msg_received);
     if (argc > 2)
     {
-        char *c = stringToBinary(argv[2]);
-        int len = strlen(c);
-        int i = 0;
-        while(i < len)
-        {  
-            if(c[i] == '0')
-                kill(atoi(argv[1]),SIGUSR1);
-            if(c[i] == '1')
-                kill(atoi(argv[1]),SIGUSR2);
-            printf("%c", c[i]);
-            i++;
-            usleep(80);
+        while(*argv[2])
+        { 
+           j = 7;
+           while (j >= 0)
+           {
+                if(*argv[2] & (1 << j))
+                    kill(atoi(argv[1]),SIGUSR2);
+                else
+                    kill(atoi(argv[1]),SIGUSR1);
+                j--; 
+                usleep(80);
+           }
+           argv[2]++;
         }
     }
     else

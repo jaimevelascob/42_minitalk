@@ -2,64 +2,29 @@
 #include <unistd.h> 
 #include <string.h>
 #include <signal.h>
+#include <stdlib.h>
 
-char*   my_strcat(char *str, char c)
-{
-    char    *cpy;
+int j = 7; // variable para mover byte
 
-    cpy = malloc(sizeof(char)*strlen(str)+2);
-    int i = 0;
-    while(str[i])
-    {
-        cpy[i] = str[i];
-        i++;
-    }
-    cpy[i++] = c;
-    cpy[i] = '\0';
-    free(str);
-    return cpy; 
-}
+//no intentes recordar, recrea, no pretendo decir que t engas que hacerlo todo de zero, ya que eso implicaria reinventar todas la herramientas
+//por eso es importante que veas a otras personas usar la herramientas, pero luego tienes que saber como usarlas
 
-void    ft_binarytochar(char *str)
-{
-    char    x;
-
-    //no intentes recordar, recrea, no pretendo decir que t engas que hacerlo todo de zero, ya que eso implicaria reinventar todas la herramientas
-    //por eso es importante que veas a otras personas usar la herramientas, pero luego tienes que saber como usarlas
-    int i = 0;
-    int j = 7;
-    x = 0;
-    while(i < 8)
-    {
-        if(str[i] == '1')
-            x = x | (1 << j);
-        i++;
-        j--;
-    }
-    printf("%c\n", x);
-}
 void    handler(int sig, siginfo_t *info, void *ucontext)
 {
-    static char *str;
-    int bitcount;
-   
-    if (!str)
+    static char x;
+
+    if (sig == SIGUSR2)
+        x = x | (1 << j);
+    if (j == 0)
     {
-        str = calloc(1, 1);
-        bitcount = 0;
+        write(1, &x, 1);
+        kill(info->si_pid, SIGUSR1);
+        x = 0;
+        j = 7;
     }
-    bitcount++;
-    if (sig == SIGUSR1)
-        str = my_strcat(str, '0');
-    else    
-        str = my_strcat(str, '1');
-    printf("%s\n", str);
-    if (bitcount == 8)
-    {
-        ft_binarytochar(str); 
-        free(str);
-        str = 0;
-    }
+    else
+        j--;
+    usleep(70);
 }
 
 
