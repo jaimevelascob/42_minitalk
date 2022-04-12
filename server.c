@@ -1,17 +1,11 @@
 #include <stdio.h> 
 #include <unistd.h> 
-#include <string.h>
 #include <signal.h>
-#include <stdlib.h>
-
-int j = 7; // variable para mover byte
-
-//no intentes recordar, recrea, no pretendo decir que t engas que hacerlo todo de zero, ya que eso implicaria reinventar todas la herramientas
-//por eso es importante que veas a otras personas usar la herramientas, pero luego tienes que saber como usarlas
 
 void    handler(int sig, siginfo_t *info, void *ucontext)
 {
     static char x;
+    static int  j = 7;
 
     if (sig == SIGUSR2)
         x = x | (1 << j);
@@ -27,10 +21,9 @@ void    handler(int sig, siginfo_t *info, void *ucontext)
     usleep(70);
 }
 
-
 int main(void)
 {
-    struct sigaction sa;
+    struct sigaction    sa;
 
     sa.sa_sigaction = handler;
     sa.sa_flags = SA_SIGINFO;

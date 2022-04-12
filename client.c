@@ -15,7 +15,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-int msg = 0;
+
+static int msg;
 
 void    msg_received()
 {
@@ -25,10 +26,12 @@ void    msg_received()
         msg = 1;
     }
 }
+
 int main(int argc, char **argv)
 {
-    int j;
-
+    int         j;
+    const int   server_pid = atoi(argv[1]);
+    
     signal(SIGUSR1, msg_received);
     if (argc > 2)
     {
@@ -38,9 +41,9 @@ int main(int argc, char **argv)
            while (j >= 0)
            {
                 if(*argv[2] & (1 << j))
-                    kill(atoi(argv[1]),SIGUSR2);
+                    kill(server_pid, SIGUSR2);
                 else
-                    kill(atoi(argv[1]),SIGUSR1);
+                    kill(server_pid, SIGUSR1);
                 j--; 
                 usleep(80);
            }
