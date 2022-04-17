@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <signal.h>
 
-static int msg;
+static int  msg;
+int         ft_atoi(const char *str);
 
 void    msg_received()
 {
@@ -30,7 +29,7 @@ void    msg_received()
 int main(int argc, char **argv)
 {
     int         j;
-    const int   server_pid = atoi(argv[1]);
+    const int   server_pid = ft_atoi(argv[1]);
     
     signal(SIGUSR1, msg_received);
     if (argc > 2)

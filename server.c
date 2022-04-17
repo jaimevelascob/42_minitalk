@@ -7,6 +7,7 @@ void    handler(int sig, siginfo_t *info, void *ucontext)
     static char x;
     static int  j = 7;
 
+    (void)(ucontext);
     if (sig == SIGUSR2)
         x = x | (1 << j);
     if (j == 0)

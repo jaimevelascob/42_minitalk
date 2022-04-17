@@ -1,12 +1,18 @@
-default: server
+CFLAGS = -Wall -Wextra -Werror
 
-server.o: server.c 
-    gcc -c server.c -o server.o
+normi = norminette -R CheckForbiddenSourceHeader
 
-server: server.o
-    gcc server.o -o server
+default: server client
 
+server: 
+	gcc $(CFLAGS) server.c -o server
+client: 
+	gcc $(CFLAGS) client.c utils/ft_atoi.c -o client
 clean:
-    -rm -f server.o
-    -rm -f server
+	-rm -f server.o client.o
+fclean:
+	-rm -f server client
 
+re: clean fclean
+
+.PHONY: clean fclean re default
