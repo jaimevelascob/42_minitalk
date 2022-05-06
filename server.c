@@ -9,17 +9,18 @@ void    handler(int sig, siginfo_t *info, void *ucontext)
 
     (void)(ucontext);
     if (sig == SIGUSR2)
+	{
         x = x | (1 << j);
-    if (j == 0)
-    {
+	}
+	kill(info->si_pid, SIGUSR1);
+	if (j == 0)
+	{ 
         write(1, &x, 1);
-        kill(info->si_pid, SIGUSR1);
         x = 0;
         j = 7;
     }
     else
         j--;
-    usleep(70);
 }
 
 int main(void)
