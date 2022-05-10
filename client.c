@@ -6,7 +6,7 @@
 /*   By: jvelasco <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:36:33 by jvelasco          #+#    #+#             */
-/*   Updated: 2022/05/10 18:03:18 by jvelasco         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:42:21 by jvelasco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,33 @@ void	call(char **argv, int server_pid)
 
 	while (*argv[2])
 	{
-		j = 7;
-		while (j >= 0)
+		j = 0;
+		while (j < 8)
 		{
 			if (*argv[2] & (1 << j))
+			{
 				kill(server_pid, SIGUSR2);
+				write(1,"1",1);
+			}
 			else
+			{
 				kill(server_pid, SIGUSR1);
-			j--;
+				write(1,"0",1);
+			}
+			printf("\nj: %d\n", j);
+			j++;
 			usleep(180);
 		}
 		argv[2]++;
+	}
+	j = 0;
+	while (j < 8)
+	{
+		kill(server_pid, SIGUSR1);
+		usleep(180);
+		j++;
+		printf("%d\n",j);
+		write(1, "\n", 1);
 	}
 }
 

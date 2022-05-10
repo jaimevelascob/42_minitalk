@@ -4,20 +4,25 @@
 
 void	handler(int sig, siginfo_t *info, void *ucontext)
 {
-	static unsigned char	x;
-	static int	j = 7;
+	static char	x;
+	static int	j = 0;
 
+	// hacer un str e ir haciendo append para luego printear el str
 	(void)(ucontext);
+	if (sig == SIGUSR1)
+		write(1, "0\n", 2);
 	if (sig == SIGUSR2)
+	{
+		write(1, "1\n", 2);
 		x = x | (1 << j);
-	if (j == 0)
+	}
+	j++;
+	if (j == 8)
 	{
 		write(1, &x, 1);
 		x = 0;
-		j = 7;
+		j = 0;
 	}
-	else
-		j--;
 	kill(info->si_pid, SIGUSR1);
 }
 
@@ -27,7 +32,8 @@ int	main(void)
 
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO;
-	printf("%d\n", getpid());
+	printf("PID -> %d\n", getpid());
+	printf("Server connecting...\n");
 	sigaction(SIGUSR1, &sa, 0);
 	sigaction(SIGUSR2, &sa, 0);
 	while (1)
