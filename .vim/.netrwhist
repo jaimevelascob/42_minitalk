@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/lolxdmagia/42/42_minitalk'
+let g:netrw_dirhist_9='/home/lolxdmagi/42/42_minitalk'
+let g:netrw_dirhist_8='/home/lolxdmagi/42/minitalk'
+let g:netrw_dirhist_7='/home/lolxdmagia'
+let g:netrw_dirhist_6='/home/lolxdmagia/Music'
+let g:netrw_dirhist_5='/home/lolxdmagia'
+let g:netrw_dirhist_4='/home/lolxdmagia/.local/bin'
+let g:netrw_dirhist_3='/home/lolxdmagia/.local'
+let g:netrw_dirhist_2='/home/lolxdmagia'
+let g:netrw_dirhist_1='/home/lolxdmagia/prueba'
