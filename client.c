@@ -9,7 +9,6 @@
 /*   Updated: 2022/05/10 21:42:21 by jvelasco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
@@ -25,7 +24,7 @@ void	msg_received()
 	if (x == g_msg * 8)
 		printf("msg received %d/%d\n", x, g_msg * 8);
 	x++;
-	usleep(50);
+	usleep(100);
 }
 
 void	call(char **argv, int server_pid)
@@ -38,18 +37,11 @@ void	call(char **argv, int server_pid)
 		while (j < 8)
 		{
 			if (*argv[2] & (1 << j))
-			{
 				kill(server_pid, SIGUSR2);
-				write(1,"1",1);
-			}
-			else
-			{
+            else
 				kill(server_pid, SIGUSR1);
-				write(1,"0",1);
-			}
-			printf("\nj: %d\n", j);
-			j++;
-			usleep(180);
+            j++;
+			usleep(1000);
 		}
 		argv[2]++;
 	}
@@ -57,10 +49,8 @@ void	call(char **argv, int server_pid)
 	while (j < 8)
 	{
 		kill(server_pid, SIGUSR1);
-		usleep(180);
+		usleep(100);
 		j++;
-		printf("%d\n",j);
-		write(1, "\n", 1);
 	}
 }
 
