@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvelasco <jvelasco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 19:47:05 by jvelasco          #+#    #+#             */
-/*   Updated: 2022/05/13 19:47:07 by jvelasco         ###   ########.fr       */
+/*   Created: 2022/05/13 21:08:51 by jvelasco          #+#    #+#             */
+/*   Updated: 2022/05/13 21:08:53 by jvelasco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/server.h"
 
-int	ft_strlen(const char *s)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int	i;
+	char			*dst;
+	unsigned int	total;
+	unsigned int	i;
 
+	total = count * size;
+	dst = malloc(total);
+	if (!dst)
+		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
+	while (total--)
 	{
+		dst[i] = 0;
 		i++;
 	}
-	return (i);
+	return ((void *)dst);
 }

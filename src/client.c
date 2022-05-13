@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvelasco <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jvelasco <jvelasco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 16:36:33 by jvelasco          #+#    #+#             */
-/*   Updated: 2022/05/10 21:42:21 by jvelasco         ###   ########.fr       */
+/*   Created: 2022/05/13 19:46:21 by jvelasco          #+#    #+#             */
+/*   Updated: 2022/05/13 21:09:12 by jvelasco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-#include <unistd.h>
-#include <signal.h>
 
-int			ft_atoi(const char *str);
-int			ft_strlen(const char *s);
+#include "../inc/server.h"
+
 static int	g_msg;
 
-void	msg_received()
+void	msg_received(__attribute((unused))int d)
 {
 	static int	x = 1;
 
 	if (x == g_msg * 8)
-		printf("msg received %d/%d\n", x, g_msg * 8);
+	{
+		ft_putstr("msg received: ");
+		ft_putnbr_fd(x, 1);
+		write(1, "/", 1);
+		ft_putnbr_fd(g_msg * 8, 1);
+		ft_putstr(" bits");
+	}
 	x++;
 	usleep(100);
 }
@@ -38,9 +41,9 @@ void	call(char **argv, int server_pid)
 		{
 			if (*argv[2] & (1 << j))
 				kill(server_pid, SIGUSR2);
-            else
+			else
 				kill(server_pid, SIGUSR1);
-            j++;
+			j++;
 			usleep(1000);
 		}
 		argv[2]++;
@@ -60,10 +63,9 @@ int	main(int argc, char **argv)
 
 	signal(SIGUSR1, msg_received);
 	if (argc <= 2)
-		printf("need parametres");
-	else if (server_pid == 0 || (kill(server_pid, SIGUSR1) == -1
-			&& kill(server_pid, SIGUSR2) == -1))
-		printf("pid dosnt exist");
+		ft_putstr("need parametres");
+	else if (!server_pid)
+		ft_putstr("the pid has to be an integer");
 	else
 	{
 		g_msg = ft_strlen(argv[2]);

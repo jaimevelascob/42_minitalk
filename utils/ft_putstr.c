@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvelasco <jvelasco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 19:47:05 by jvelasco          #+#    #+#             */
-/*   Updated: 2022/05/13 19:47:07 by jvelasco         ###   ########.fr       */
+/*   Created: 2022/05/13 19:46:53 by jvelasco          #+#    #+#             */
+/*   Updated: 2022/05/13 19:46:55 by jvelasco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/server.h"
 
-int	ft_strlen(const char *s)
+void	ft_putstr(char *str)
 {
-	int	i;
+	int		count;
 
-	i = 0;
-	while (s[i] != '\0')
+	count = 0;
+	while (str[count] != '\0')
 	{
-		i++;
+		write(1, &str[count], 1);
+		count++;
 	}
-	return (i);
 }

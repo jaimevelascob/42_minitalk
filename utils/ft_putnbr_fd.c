@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvelasco <jvelasco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 19:47:05 by jvelasco          #+#    #+#             */
-/*   Updated: 2022/05/13 19:47:07 by jvelasco         ###   ########.fr       */
+/*   Created: 2022/05/13 19:46:44 by jvelasco          #+#    #+#             */
+/*   Updated: 2022/05/13 19:46:46 by jvelasco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/server.h"
 
-int	ft_strlen(const char *s)
+void	ft_putnbr_fd(int nb, int fd)
 {
-	int	i;
+	char	c;
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
+	if (nb > 9)
+		ft_putnbr_fd(nb / 10, fd);
+	c = (nb % 10) + '0';
+	write(fd, &c, 1);
 }
