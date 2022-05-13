@@ -1,6 +1,7 @@
 # 42_minitalk
-	A project communication program in the form of a client and a server only using UNIX signals (SIGUSR1 AND SIGUSR2).
-	1. Make: <br />
+	A project communication program in the form of a client and a server only 
+	using UNIX signals (SIGUSR1 AND SIGUSR2).
+	1. Make:
 ![](/img/make.png?raw=true "shot1")
 	(Generate server and client file)
 ![](/img/serverclient.png?raw=true "shot1")
