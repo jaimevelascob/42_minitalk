@@ -3,7 +3,7 @@
 	1. Make: <br />
 ![](/img/make.png?raw=true "shot1")
 	(Generate server and client file)
-![](/img/server&client.png?raw=true "shot1")
+![](/img/serverclient.png?raw=true "shot1")
     2. Exect ./server: <br />
 ![](/img/serverpid.png?raw=true "shot1")
     3. Exect ./client with the pid and the str to send:
